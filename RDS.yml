@@ -9,7 +9,7 @@
     ec2_vpc_net:
       state: present
       region: eu-west-2
-      name: eksctl-EKS-CLUSTER3-cluster/VPC
+      name: eksctl-EKS-CLUSTER-cluster/VPC
       cidr_block: 192.168.0.0/16
     register: vpc_res
 
@@ -68,4 +68,4 @@
        ports:
        - 3306
        cidr_ip: 192.168.0.0/16
-       rule_desc: EKS to RDS 
+       # rule_desc: EKS to RDS 

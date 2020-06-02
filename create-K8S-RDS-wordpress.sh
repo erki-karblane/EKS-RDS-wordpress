@@ -1,7 +1,7 @@
 #!/bin/bash
 # create EKS cluster with worker nodes, new VPC, subnets, sg, etc
 echo "Creating EKS cluster"
-eksctl create cluster --name EKS-CLUSTER3 --version 1.16 --region eu-west-2 --nodegroup-name standard-workers --node-type t2.micro --nodes 3 --nodes-min 1 --nodes-max 4 --ssh-access --ssh-public-key public_key.pem --managed
+eksctl create cluster --name EKS-CLUSTER --version 1.16 --region eu-west-2 --nodegroup-name standard-workers --node-type t2.micro --nodes 3 --nodes-min 1 --nodes-max 4 --ssh-access --ssh-public-key public_key.pem --managed
  
 sleep 300
 echo "EKS cluster with corresponding VCP, SG,nodes and Nat GW complete"
