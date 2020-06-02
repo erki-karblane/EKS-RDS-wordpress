@@ -10,7 +10,7 @@ echo "Creating RDS database with networks, network group and ACL to be accessed 
 echo " If You want to change the wordpress sql username and password, edit the vars.yml before proceeding"
 ansible-playbook -v RDS.yml
 echo "Waiting for the RDS instance to come up"
-sleep 1200
+sleep 300
 # deploy the wordpress kubernetes deployment
 echo "RDS is up, configuring wordpress deployment in kubernetes"
 ansible-playbook -v kube.yml
