@@ -131,9 +131,14 @@ The Wordpress deployment task first creates a loadbalancer service, a persistent
 When the script finishes, use the kubectl tooling to check if the kubernetes
 nodes are operational, wordpress pod is up and which URL has been configured
 for the wordpress site.
-Example commands: kubectl get nodes -o wide
-                  kubectl get pods
-                  kubectl get svc
+
+Example commands: 
+
+kubectl get nodes -o wide
+
+kubectl get pods
+
+kubectl get svc
                   
 A few words about autoscaling:
 -------------------------------
