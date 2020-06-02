@@ -138,7 +138,9 @@ kubectl get nodes -o wide
 
 kubectl get pods
 
-kubectl get svc
+kubectl get svc 
+
+When You access the wordpress URL, make an user, so You can log in and start using the wordpress admin panel to create Your first web-page!
                   
 A few words about autoscaling:
 -------------------------------
