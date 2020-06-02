@@ -33,8 +33,6 @@ If not, lets walk through the nessesary steps:
         sudo unzip awscliv2.zip
         sudo ./aws/install
 
-
-
 3. Install kubectl:
         curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
         sudo chmod +x ./kubectl
@@ -112,7 +110,7 @@ Example commands: kubectl get nodes -o wide
                   
 A few words about autoscaling:
 -------------------------------
-EKS - currently the EKS cluster works with 3 workers, minimum node count 1, maximum 4.
+EKS - currently the EKS cluster works with a autoscaling group, with 3 worker nodes, minimum count 1, maximum 4.
 Read more on eksctl autoscaling: https://eksctl.io/usage/autoscaling/
 RDS supports Storage Auto Scaling. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html
 Kubernetes deployment scaling - currently only one pod is running. To increase the pod count or get more information: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment
