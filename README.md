@@ -10,6 +10,7 @@ Prerequisites
 The tooling has been tested on ubuntu 16.04 LTS. Your going to need a user
 with sudo rights.
 
+Create a user in the AWS web console with programmatic access and give correct permissions.
 Use the IAM.json to give the nessesary user rights for the AWS user.
 
 Get the key from AWS to the same folder where You setup this tooling.
