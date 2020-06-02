@@ -140,6 +140,7 @@ kubectl get pods
 
 kubectl get svc 
 
+The wordpress URL is in a similar format:  a13d50d065f0d4f8c964add9de47902d-2056025261.eu-west-2.elb.amazonaws.com
 When You access the wordpress URL, make an user, so You can log in and start using the wordpress admin panel to create Your first web-page!
                   
 A few words about autoscaling:
