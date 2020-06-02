@@ -1,0 +1,6 @@
+# RDS instance name
+instance_name: RDSWordpress
+#DB username
+username: mysql_admin
+#DB password
+password: Par00l123

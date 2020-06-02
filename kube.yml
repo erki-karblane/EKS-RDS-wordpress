@@ -1,0 +1,95 @@
+- name: Wordpress deployment creation
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: include variables
+    include_vars: vars.yml
+   
+  - name: Check for RDS
+    rds_instance:
+      state: present
+      db_instance_identifier: "{{ instance_name }}"
+    register: rds_res
+
+  - name: Create a LB
+    k8s:
+      state: present
+      namespace: default
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: wordpress
+          labels:
+            app: wordpress
+        spec:
+          ports:
+          - port: 80
+          selector:
+            app: wordpress
+            tier: frontend
+          type: LoadBalancer
+
+  - name: Create persistent storage
+    k8s:
+      state: present
+      namespace: default
+      definition:
+         apiVersion: v1
+         kind: PersistentVolumeClaim
+         metadata:
+           name: wp-pv-claim
+           labels:
+             app: wordpress
+         spec:
+           accessModes:
+             - ReadWriteOnce
+           resources:
+             requests:
+               storage: 2Gi
+
+  - name: Create a deployment
+    k8s:
+      state: present
+      namespace: default
+      definition:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: wordpress
+          labels:
+            app: wordpress
+        spec:
+          selector:
+            matchLabels:
+              app: wordpress
+              tier: frontend
+          strategy:
+            type: Recreate
+          template:
+            metadata:
+              labels:
+                app: wordpress
+                tier: frontend
+            spec:
+              containers:
+              - image: buddy/wordpress:latest
+                name: wordpress
+                env:
+                - name: WORDPRESS_DB_HOST
+                  value: "{{ rds_res.endpoint.address }}"
+                - name: WORDPRESS_DB_PASSWORD
+                  value: "{{ password }}"
+                - name: WORDPRESS_DB_USER
+                  value: "{{ username }}"
+                ports:
+                - containerPort: 80
+                  name: wordpress
+                volumeMounts:
+                - name: wordpress-persistent-storage
+                  mountPath: /var/www/html
+              volumes:
+              - name: wordpress-persistent-storage
+                persistentVolumeClaim:
+                  claimName: wp-pv-claim
+

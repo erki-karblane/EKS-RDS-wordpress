@@ -1,0 +1,71 @@
+- name: RDS launcher
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Include variables
+    include_vars: vars.yml 
+
+  - name: Doublecheck the VPC
+    ec2_vpc_net:
+      state: present
+      region: eu-west-2
+      name: eksctl-EKS-CLUSTER3-cluster/VPC
+      cidr_block: 192.168.0.0/16
+    register: vpc_res
+
+  - name: Create subnet1 for RDS
+    ec2_vpc_subnet:
+      state: present
+      az: eu-west-2a
+      vpc_id: "{{ vpc_res.vpc.id }}"
+      cidr: 192.168.192.0/19
+      tags:
+        Name: RDS subnet 1
+    register: subnet1_subnet
+
+  - name: Create subnet2 for RDS
+    ec2_vpc_subnet:
+      state: present
+      az: eu-west-2b
+      vpc_id: "{{ vpc_res.vpc.id }}"
+      cidr: 192.168.224.0/19
+      tags:
+        Name: RDS subnet 2
+    register: subnet2_subnet
+    
+  - name: Create RDS subnet group
+    rds_subnet_group:
+      state: present
+      region: eu-west-2
+      name: RDS-subnet-gr
+      description: Subnet group for Multi-AZ RDS
+      subnets:
+        - "{{ subnet1_subnet.subnet.id }}"
+        - "{{ subnet2_subnet.subnet.id }}"
+
+  - name: Create multi-az Mysql in a VCP
+    rds_instance:
+      db_instance_identifier: "{{ instance_name }}"
+      region: eu-west-2
+      engine: MySQL
+      allocated_storage: 10
+      instance_type: db.t2.micro
+      username: "{{ username }}"
+      password: "{{ password }}"
+      multi_az: yes
+      db_subnet_group_name: RDS-subnet-gr
+    register: rds_res
+    
+  - name: Add an Inbound rule so the EKS nodes can access RDS
+    ec2_group:
+     vpc_id: "{{ vpc_res.vpc.id }}"
+     region: eu-west-2
+     state: present
+     name: default
+     description: default VPC security group
+     rules:
+     - proto: tcp
+       ports:
+       - 3306
+       cidr_ip: 192.168.0.0/16
+       rule_desc: EKS to RDS 
