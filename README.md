@@ -5,6 +5,7 @@ This repository contains tooling for deploying EKS cluster with workers using
 etctl, RDS mysql database and Wordpress Kubernetes deployment with ansible.
 
 #Prerequisites
+---------------
 
 The tooling has been tested on ubuntu 16.04 LTS. Your going to need a user
 with sudo rights.
@@ -68,6 +69,7 @@ optional task
 Testi if Your AWS credentials work for example with a test querry "aws ec2 describe-instances
 
 #Creating the EKS cluster, RDS and wordpress site
+--------------------------------------------------
 
 Now your ready to create the EKS cluster, RDS cluster, wordpress deployment
 and services needed to support those.
