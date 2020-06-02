@@ -27,11 +27,12 @@ get the installation working: sudo ./prerequisites.sh
 If not, lets walk through the nessesary steps:
 
 1. Install awscli like this:
-        sudo apt-get update
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        sudo apt install -y unzip
-        sudo unzip awscliv2.zip
-        sudo ./aws/install
+
+sudo apt-get update
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install -y unzip
+sudo unzip awscliv2.zip
+sudo ./aws/install
 
 3. Install kubectl:
         curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
