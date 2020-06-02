@@ -1,4 +1,4 @@
-#!/bin/bash
+# #!/bin/bash
  
 # install awscli
 echo " Installing AWS CLI"
@@ -6,11 +6,7 @@ apt-get update
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 apt install -y unzip
 unzip awscliv2.zip
-sudo ./aws/install
-# configure aws cli
-echo "Configureing AWS"
-echo "Use eu-west-2 as the region"
-aws configure
+./aws/install
 # install kubectl
 echo "Installing kubectl"
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
@@ -38,11 +34,11 @@ pip3 install -U ansible
 echo "Installing opensift module"
 pip3 install -U openshift
 # installing boto, boto3 and botocore
-Echo "Installing botocore and boto with boto3"
+echo "Installing botocore and boto with boto3"
 pip3 install -U botocore
 pip3 install -U boto
 pip3 install -U boto3
 
-Echo "Thats it, now Your ready to copy your aws key over."
-Echo " Please use the following to give right permissions and formation: chmod 600 key.pem and ssh-keygen -y -f key.pem > public_key.pem"
-Echo " Testi if Your AWS credentials work for example with a test querry "aws ec2 describe-instances""
+echo "Thats it, now Your ready to copy your aws key over."
+echo " Please use the following to give right permissions and formation: chmod 600 key.pem and ssh-keygen -y -f key.pem > public_key.pem"
+echo " Testi if Your AWS credentials work for example with a test querry "aws ec2 describe-instances""
