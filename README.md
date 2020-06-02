@@ -22,7 +22,9 @@ name which the script will user.
 Make the .sh files executable: chmod +x filename.sh
 
 You can use the prerequisites.sh to install the nessesary tools required to
-get the installation working. If not, lets walk through the nessesary steps:
+get the installation working: sudo ./prerequisites.sh
+
+If not, lets walk through the nessesary steps:
 
 1. Install awscli like this:
         sudo apt-get update
