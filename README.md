@@ -87,11 +87,11 @@ Execute the create-K8S-RDS-wordpress.sh script to create the services.
 Please be patient as the services creation can take up to 20-30 minutes.
 
 Creating the EKS cluster task will create the cluster with ver 1.16 and 3 worker node managed nodegroup with a t2.micro machines.
-The cluster will be made with the ssh access from the internet, but the access key provided earlier will be alloed to log in.
+The cluster will be made with the ssh access from the internet, but the access key provided earlier will be allowed to log in.
 If needed, reconfigure the ACL just to allow inbound connections from Your external IP.
 The cluster task will also create a new VPC, new subnets and security groups along with a NAT gateway, which will be used to communicate with the outside world. 
 
-The RDS task creates 2 new subnets for the RDS as it needs to be multiple availability zones. The subnets will be tied to a subnetgroup which the RDS will use. RDS will be made in the eu-west-2 region with a MySQL engine using a small instance (db.t2.micro) and a 10G allocated storage. After the RDS is created, the script will make an ACL, which allows the Kubernetes nodes to communicate with the MySQL database on port 3306.
+The RDS task creates 2 new subnets for the RDS as it needs to be multiple availability zones. The subnets will be tied to a subnetgroup which the RDS will use. RDS will be made in the eu-west-2 region with a MySQL engine using a small instance (db.t2.micro) and a 10G allocated storage. After the RDS is created, the script will make an ACL, which allows the Kubernetes nodes to communicate with the MySQL database on port 3306. The RDS deployment will take place inside the VPC, which was made during the EKS cluster task.
 
 The Wordpress deployment task first creates a loadbalancer service, a persistent storage for the wordpress deployment and the wordpress deployment itself. Feel free to change the container image or the pod count when the load increases.
 
