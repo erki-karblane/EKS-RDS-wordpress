@@ -38,7 +38,7 @@ sudo unzip awscliv2.zip
 
 sudo ./aws/install
 
-3. Install kubectl:
+2. Install kubectl:
 
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
 
@@ -50,37 +50,51 @@ optional task:
 
 echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
 
-4. install eksctl:
+3. install eksctl:
         sudo curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
         mv /tmp/eksctl /usr/local/bin
 
-5. Install or upgrade python 3:
-        sudo apt-get install software-properties-common
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt-get update
-        sudo apt-et install pyhton3.6
+4. Install or upgrade python 3:
 
-6. Install pip for pyhton:
-        sudo apt-get install -y python3-pip
+sudo apt-get install software-properties-common
 
-7. Install ansible:
-        sudo pip3 install -U ansible
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+sudo apt-get update
+
+sudo apt-et install pyhton3.6
+
+5. Install pip for pyhton:
+
+sudo apt-get install -y python3-pip
+
+6. Install ansible:
+
+sudo pip3 install -U ansible
+
 NB! Ansible needs to use python3 for this setup. If You have python 2 and 3 installed, you need to edit the create-K8s-RDS-wordpress.sh script so that the ansible-playbooks will use python3, for example: 
+
 ansible-playbook -v kube.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
-8. Install openshift module:
-        sudo pip3 install -U openshift
+7. Install openshift module:
 
-9. Install boto, boto3 and botocore modules:
-        sudo pip3 install -U botocore
-        sudo pip3 install -U boto
-        sudo pip3 install -U boto3
+sudo pip3 install -U openshift
 
-10. Manual task - Configure aws cli to use the aws user credentials, which user rights we
+8. Install boto, boto3 and botocore modules:
+
+sudo pip3 install -U botocore
+
+sudo pip3 install -U boto
+
+sudo pip3 install -U boto3
+
+9. MANUAL TASK - Configure aws cli to use the aws user credentials, which user rights we
 previously changed. Used eu-west-2 as region, as this will be the default
 region. If You want to use some other region, check if the aws services are
 offered on the other region.
-        aws configure
+
+aws configure
+
 Sometimes You get "Errno 13, permissions denied". To fix it change the ownership of the folder, for example:  sudo chown -R $USER /home/ and run the aws configure again.
 
 Optional:
@@ -99,13 +113,16 @@ For diagnostic reasons, the public key will be used to give us ssh access.
 Please doublecheck that your key meets the requirements. The key region and
 the region where the cluster will be created, must match.
 
-Execute the create-K8S-RDS-wordpress.sh script to create the services.
+Execute the create-K8S-RDS-wordpress.sh script to create the services:
+
+./create-K8S-RDS-wordpress.sh
+
 Please be patient as the services creation can take up to 20-30 minutes.
 
-Creating the EKS cluster task will create the cluster with ver 1.16 and 3 worker node managed nodegroup with a t2.micro machines.
+Creating the EKS cluster task will create the cluster with ver 1.16 and 3 worker node managed nodegroup(autoscaling) with a t2.micro machines.
 The cluster will be made with the ssh access from the internet, but the access key provided earlier will be allowed to log in.
 If needed, reconfigure the ACL just to allow inbound connections from Your external IP.
-The cluster task will also create a new VPC, new subnets and security groups along with a NAT gateway, which will be used to communicate with the outside world. 
+The cluster task will also create a new VPC, new subnets and security groups along with a NAT gateway, which will be used to communicate with the outside world. The subnets will reside in different availability zones.
 
 The RDS task creates 2 new subnets for the RDS as it needs to be multiple availability zones. The subnets will be tied to a subnetgroup which the RDS will use. RDS will be made in the eu-west-2 region with a MySQL engine using a small instance (db.t2.micro) and a 10G allocated storage. After the RDS is created, the script will make an ACL, which allows the Kubernetes nodes to communicate with the MySQL database on port 3306. The RDS deployment will take place inside the VPC, which was made during the EKS cluster task.
 
