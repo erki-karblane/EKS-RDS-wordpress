@@ -56,6 +56,8 @@ optional task
 
 7. Install ansible:
         sudo pip3 install -U ansible
+NB! Ansible needs to use python3 for this setup. If You have python 2 and 3 installed, you need to edit the create-K8s-RDS-wordpress.sh script so that the ansible-playbooks will use python3, for example: 
+ansible-playbook -v kube.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
 8. Install openshift module:
         sudo pip3 install -U openshift
