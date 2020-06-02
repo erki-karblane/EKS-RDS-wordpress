@@ -31,11 +31,7 @@ get the installation working. If not, lets walk through the nessesary steps:
         sudo unzip awscliv2.zip
         sudo ./aws/install
 
-2. Configure aws cli to use the aws user credentials, which user rights we
-previously changed. Used eu-west-2 as region, as this will be the default
-region. If You want to use some other region, check if the aws services are
-offered on the other region.
-        aws configure
+
 
 3. Install kubectl:
         curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
@@ -70,7 +66,13 @@ ansible-playbook -v kube.yml -e 'ansible_python_interpreter=/usr/bin/python3'
         sudo pip3 install -U boto
         sudo pip3 install -U boto3
 
-10. Optional:
+10. Manual task - Configure aws cli to use the aws user credentials, which user rights we
+previously changed. Used eu-west-2 as region, as this will be the default
+region. If You want to use some other region, check if the aws services are
+offered on the other region.
+        aws configure
+Sometimes You get Errno 13, permissions denied, change the ownership of the folder, for example:  sudo chown -R $USER /home/
+Optional:
 Testi if Your AWS credentials work for example with a test querry: aws ec2 describe-instances
 
 Creating the EKS cluster, RDS and wordpress site
