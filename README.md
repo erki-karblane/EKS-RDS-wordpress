@@ -101,6 +101,7 @@ Example commands: kubectl get nodes -o wide
                   kubectl get svc
                   
 A few words about autoscaling:
+-------------------------------
 EKS - currently the EKS cluster works with 3 workers, minimum node count 1, maximum 4.
 Read more on eksctl autoscaling: https://eksctl.io/usage/autoscaling/
 RDS supports Storage Auto Scaling. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html
