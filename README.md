@@ -71,7 +71,8 @@ previously changed. Used eu-west-2 as region, as this will be the default
 region. If You want to use some other region, check if the aws services are
 offered on the other region.
         aws configure
-Sometimes You get Errno 13, permissions denied, change the ownership of the folder, for example:  sudo chown -R $USER /home/
+Sometimes You get "Errno 13, permissions denied". To fix it change the ownership of the folder, for example:  sudo chown -R $USER /home/ and run the aws configure again.
+
 Optional:
 Testi if Your AWS credentials work for example with a test querry: aws ec2 describe-instances
 
