@@ -19,6 +19,8 @@ Please use the following to give right permissions and formation: chmod 600 key.
 It is important that You save the key as public_key.pem as this is the file
 name which the script will user.
 
+Make the .sh files executable: chmod +x filename.sh
+
 You can use the prerequisites.sh to install the nessesary tools required to
 get the installation working. If not, lets walk through the nessesary steps:
 
