@@ -9,7 +9,7 @@
         },
     
     {
-            "Sid": "IAM-rights",
+            "Sid": "IAMrights",
             "Effect": "Allow",
             "Action": [
                 "iam:AddRoleToInstanceProfile",
@@ -37,7 +37,7 @@
             "Resource": "*"
         },
     {
-            "Sid": "RDS-rights",
+            "Sid": "RDSrights",
             "Effect": "Allow",
             "Action": [
                 "rds:*"              
