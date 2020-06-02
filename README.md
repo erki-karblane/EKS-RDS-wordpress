@@ -4,7 +4,7 @@ EKS cluster with RDS setup on AWS for a wordpress deployment
 This repository contains tooling for deploying EKS cluster with workers using
 etctl, RDS mysql database and Wordpress Kubernetes deployment with ansible.
 
-#Prerequisites
+Prerequisites
 ---------------
 
 The tooling has been tested on ubuntu 16.04 LTS. Your going to need a user
@@ -66,9 +66,9 @@ optional task
         sudo pip3 install -U boto3
 
 10. Optional:
-Testi if Your AWS credentials work for example with a test querry "aws ec2 describe-instances
+Testi if Your AWS credentials work for example with a test querry: aws ec2 describe-instances
 
-#Creating the EKS cluster, RDS and wordpress site
+Creating the EKS cluster, RDS and wordpress site
 --------------------------------------------------
 
 Now your ready to create the EKS cluster, RDS cluster, wordpress deployment
@@ -84,10 +84,26 @@ the region where the cluster will be created, must match.
 Execute the create-K8S-RDS-wordpress.sh script to create the services.
 Please be patient as the services creation can take up to 20-30 minutes.
 
+Creating the EKS cluster task will create the cluster with ver 1.16 and 3 worker node managed nodegroup with a t2.micro machines.
+The cluster will be made with the ssh access from the internet, but the access key provided earlier will be alloed to log in.
+If needed, reconfigure the ACL just to allow inbound connections from Your external IP.
+The cluster task will also create a new VPC, new subnets and security groups along with a NAT gateway, which will be used to communicate with the outside world. 
+
+The RDS task creates 2 new subnets for the RDS as it needs to be multiple availability zones. The subnets will be tied to a subnetgroup which the RDS will use. RDS will be made in the eu-west-2 region with a MySQL engine using a small instance (db.t2.micro) and a 10G allocated storage. After the RDS is created, the script will make an ACL, which allows the Kubernetes nodes to communicate with the MySQL database on port 3306.
+
+The Wordpress deployment task first creates a loadbalancer service, a persistent storage for the wordpress deployment and the wordpress deployment itself. Feel free to change the container image or the pod count when the load increases.
+
 When the script finishes, use the kubectl tooling to check if the kubernetes
 nodes are operational, wordpress pod is up and which URL has been configured
 for the wordpress site.
 Example commands: kubectl get nodes -o wide
                   kubectl get pods
                   kubectl get svc
+                  
+A few words about autoscaling:
+EKS - currently the EKS cluster works with 3 workers, minimum node count 1, maximum 4.
+Read more on eksctl autoscaling: https://eksctl.io/usage/autoscaling/
+RDS supports Storage Auto Scaling. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html
+Kubernetes deployment scaling - currently only one pod is running. To increase the pod count or get more information: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment
+
 
