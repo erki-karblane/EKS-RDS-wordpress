@@ -39,6 +39,5 @@ pip3 install -U botocore
 pip3 install -U boto
 pip3 install -U boto3
 
-echo "Thats it, now Your ready to copy your aws key over."
-echo " Please use the following to give right permissions and formation: chmod 600 key.pem and ssh-keygen -y -f key.pem > public_key.pem"
-echo " Testi if Your AWS credentials work for example with a test querry "aws ec2 describe-instances""
+echo " Please use the following to give right permissions and formation: chmod 600 key.pem and ssh-keygen -y -f key.pem > public_key.pem if You yet haven't done so"
+# echo " Testi if Your AWS credentials work for example with a test querry: "aws ec2 describe-instances""
