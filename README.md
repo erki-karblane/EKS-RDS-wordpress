@@ -29,17 +29,26 @@ If not, lets walk through the nessesary steps:
 1. Install awscli like this:
 
 sudo apt-get update
+
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
 sudo apt install -y unzip
+
 sudo unzip awscliv2.zip
+
 sudo ./aws/install
 
 3. Install kubectl:
-        curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
-        sudo chmod +x ./kubectl
-        mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-optional task
-        echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
+
+sudo chmod +x ./kubectl
+
+mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+
+optional task:
+
+echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
 
 4. install eksctl:
         sudo curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
